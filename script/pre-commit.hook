@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Check every changed file is a pdf file
+files=$(git diff --cached --name-only)
+for f in $files; do
+    echo "Checking file '$f'"
+    filetype=$(file "$f" | sed "s/^.*:\(.*\),/\1/g")
+    if [ "$filetype" != "PDF document" || $filetype != "Bourne-Again shell script" ]; then
+        echo "Wrong file type: $f"
+        exit 1
+    fi
+done
+
+# Do check whether ask to change the database or not.
+librarian_args=()
+
+ADD_FILES=$(git diff --cached --name-only --diff-filter=A)
+if [ ${#librarian_args[@]} -ne 0 ]; then
+    librarian_args+=("--add" "${ADD_FILES[@]}")
+fi
+
+COPY_FILES=$(git diff --cached --name-only --diff-filter=C)
+if [ ${#librarian_args[@]} -ne 0 ]; then
+    librarian_args+=("--copy" "${COPY_FILES[@]}")
+fi
+
+DEL_FILES=$(git diff --cached --name-only --diff-filter=D)
+if [ ${#librarian_args[@]} -ne 0 ]; then
+    librarian_args+=("--delete" "${DEL_FILES[@]}")
+fi
+
+MOD_FILES=$(git diff --cached --name-only --diff-filter=M)
+if [ ${#librarian_args[@]} -ne 0 ]; then
+    librarian_args+=("--modify" "${MOD_FILES[@]}")
+fi
+
+RENAME_FILES=$(git diff --cached --name-only --diff-filter=R)
+if [ ${#librarian_args[@]} -ne 0 ]; then
+    librarian_args+=("--rename" "${RENAME_FILES[@]}")
+fi
+
+TYPE_FILES=$(git diff --cached --name-only --diff-filter=T)
+if [ ${#librarian_args[@]} -ne 0 ]; then
+    librarian_args+=("--type" "${TYPE_FILES[@]}")
+fi
+
+# If there has any error, show error message in the python script.
+# Alert error if it did not get the change of the file.
+root=$(git rev-parse --show-toplevel)
+python3 ${root}/script/librarian.py "${librarian_args[@]}" --all "${files[@]}"
+if [[ $? -ne 0 ]]; then exit $?; fi
