@@ -15,37 +15,37 @@ done
 librarian_args=()
 
 ADD_FILES=$(git diff --cached --name-only --diff-filter=A)
-if [ ${#librarian_args[@]} -ne 0 ]; then
+if [ ${#ADD_FILES[@]} -ne 0 ]; then
     librarian_args+=("--add" "${ADD_FILES[@]}")
 fi
 
 COPY_FILES=$(git diff --cached --name-only --diff-filter=C)
-if [ ${#librarian_args[@]} -ne 0 ]; then
+if [ ${#COPY_FILES[@]} -ne 0 ]; then
     librarian_args+=("--copy" "${COPY_FILES[@]}")
 fi
 
 DEL_FILES=$(git diff --cached --name-only --diff-filter=D)
-if [ ${#librarian_args[@]} -ne 0 ]; then
+if [ ${#DEL_FILES[@]} -ne 0 ]; then
     librarian_args+=("--delete" "${DEL_FILES[@]}")
 fi
 
 MOD_FILES=$(git diff --cached --name-only --diff-filter=M)
-if [ ${#librarian_args[@]} -ne 0 ]; then
+if [ ${#MOD_FILES[@]} -ne 0 ]; then
     librarian_args+=("--modify" "${MOD_FILES[@]}")
 fi
 
 RENAME_FILES=$(git diff --cached --name-only --diff-filter=R)
-if [ ${#librarian_args[@]} -ne 0 ]; then
+if [ ${#RENAME_FILES[@]} -ne 0 ]; then
     librarian_args+=("--rename" "${RENAME_FILES[@]}")
 fi
 
 TYPE_FILES=$(git diff --cached --name-only --diff-filter=T)
-if [ ${#librarian_args[@]} -ne 0 ]; then
+if [ ${#TYPE_FILES[@]} -ne 0 ]; then
     librarian_args+=("--type" "${TYPE_FILES[@]}")
 fi
 
 # If there has any error, show error message in the python script.
 # Alert error if it did not get the change of the file.
 root=$(git rev-parse --show-toplevel)
-python3 ${root}/script/librarian.py "${librarian_args[@]}" --all "${files[@]}"
+python3 ${root}/script/librarian.py --commit "${files[@]}" "${librarian_args[@]}"
 if [[ $? -ne 0 ]]; then exit $?; fi
