@@ -12,7 +12,7 @@ commit_op = {"--add", "--copy", "--delete",
 
 find_op = {"--tag", "--author", "--name", "--isbn", __find_token}
 
-manual_op = {"--tag", "--author", "--name", "--isbn", "--path",  __manual}
+manual_op = {"--tag", "--author", "--name", "--isbn", "--path",  __manual_token}
 
 operations = set.union(commit_op, find_op, manual_op)
 
