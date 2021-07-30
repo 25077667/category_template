@@ -47,5 +47,5 @@ fi
 # If there has any error, show error message in the python script.
 # Alert error if it did not get the change of the file.
 root=$(git rev-parse --show-toplevel)
-python3 ${root}/script/librarian.py --commit "${files[@]}" "${librarian_args[@]}"
+python3 ${root}/scripts/librarian.py --commit "${files[@]}" "${librarian_args[@]}"
 if [[ $? -ne 0 ]]; then exit $?; fi

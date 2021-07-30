@@ -75,7 +75,7 @@ def manual(**args: list) -> None:
 
 def show_usage():
     print("""
-    python3 ./script/librarian.py --[method] --[tags [value ...]]
+    python3 ./scripts/librarian.py --[method] --[tags [value ...]]
 
     [method]: 
         commit: To update the sqlite.db of this library, 
@@ -109,14 +109,14 @@ def show_usage():
                                     which can be an absolute path or relative path.
 
     Example:
-        python3 ./script/librarian.py --commit A.pdf B.pdf --add B.pdf A.pdf
-        python3 ./script/librarian.py --commit # Do nothing
+        python3 ./scripts/librarian.py --commit A.pdf B.pdf --add B.pdf A.pdf
+        python3 ./scripts/librarian.py --commit # Do nothing
 
-        python3 ./script/librarian.py --find --tag A B C D E --author Chih-Hsuan Yang
-        python3 ./script/librarian.py --find --tag A B C D E --author "Chih-Hsuan Yang"
+        python3 ./scripts/librarian.py --find --tag A B C D E --author Chih-Hsuan Yang
+        python3 ./scripts/librarian.py --find --tag A B C D E --author "Chih-Hsuan Yang"
 
-        python3 ./script/librarian.py --manual --tag foo bar --author 'Chih-Hsuan Yang' --path a/b/c/ed/me.pdf
-        python3 ./script/librarian.py --manual --tag foo bar --isbn dadada --author "Chih-Hsuan Yang" --path /home/user/Desktop/me.pdf
+        python3 ./scripts/librarian.py --manual --tag foo bar --author 'Chih-Hsuan Yang' --path a/b/c/ed/me.pdf
+        python3 ./scripts/librarian.py --manual --tag foo bar --isbn dadada --author "Chih-Hsuan Yang" --path /home/user/Desktop/me.pdf
     """)
 
 

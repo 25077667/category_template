@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Apply hooks
-cp script/pre-commit.hook .git/hooks/pre-commit
-cp script/commit-msg.hook .git/hooks/commit-msg
+cp scripts/pre-commit.hook .git/hooks/pre-commit
+cp scripts/commit-msg.hook .git/hooks/commit-msg
 
 py_pkg=(pre-commit)
 # Check pre-commit has installed
 if [ ! -x "$(command -v pre-commit --version)" ]; then
-    sudo script/library_setup.sh
+    sudo scripts/library_setup.sh
     exit 1
 fi
 
